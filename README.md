@@ -1,2 +1,7 @@
 # Sprint_2
- Diseñar y moldear estructuras de datos en bases de datos relacionales o SQL, y documentales o No SQL.
+# mysql-estructura
+Introducción a MySql y MongoDB
+
+Hoy en día, cualquier aplicación empresarial que se desarrolle, tiene la necesidad de guardar y consultar datos desde algún medio de persistencia.
+
+Esto hace que sea imprescindible conocer las nociones básicas sobre el diseño de bases de datos, mediante estos ejercicios aprendo a modelarlas y a programarlas correctamente.
