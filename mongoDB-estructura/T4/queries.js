@@ -1,21 +1,26 @@
 // Escribe una consulta para mostrar todos los documentos en la colección Restaurantes.
 db.restaurants.find()
 // Escribe una consulta para mostrar restaurante_id, name, borough y cuisine para todos los documentos en la colección Restaurantes.
-db.restaurants.find({}, {restaurante_id: 1, name: 1, borough: 1, cuisine: 1})
+db.restaurants.find({}, {restaurant_id: 1, name: 1, borough: 1, cuisine: 1})
 // Escribe una consulta para mostrar restaurante_id, name, borough y cuisine, pero excluye el campo _id para todos los documentos en la colección Restaurantes.
-db.restaurants.find({}, {restaurante_id: 1, _id: 0, name: 1, borough: 1, cuisine: 1})
-db.restaurants.find({}, {restaurante_id: 1, _id: 0, name: 1, borough: 1, zipcode: 1})
-
-
-
-
-
+db.restaurants.find({}, {restaurant_id: 1, _id: 0, name: 1, borough: 1, cuisine: 1})
 // Escribe una consulta para mostrar restaurant_id, name, borough y zip code, pero excluye el campo _id para todos los documentos en la colección Restaurantes.
+db.restaurants.find({}, {address:{zipcode:1}, restaurant_id: 1, _id: 0, name: 1, borough: 1})
 // Escribe una consulta para mostrar todos los restaurantes que están en el Bronx.
+db.restaurants.find({}, {borough: "bronx", _id: 0, name: 1})
 // Escribe una consulta para mostrar los primeros 5 restaurantes que están en el Bronx.
-// Escribe una consulta para mostrar el próximo 5 restaurantes después de saltar los primeros 5 del Bronx.
-// Escribe una consulta para encontrar los restaurantes que tienen un resultado además de 90.
-// Escribe una consulta para encontrar los restaurantes que tienen un resultado además de 80 pero menos que 100.
+db.restaurants.find({}, {borough: "bronx", _id: 0, name: 1}, {limit: 5})
+// Escribe una consulta para mostrar los próximos 5 restaurantes después de saltar los primeros 5 del Bronx.
+db.restaurants.find({}, {borough: "bronx", _id: 0, name: 1}).skip(5).limit(5)
+// Escribe una consulta para encontrar los restaurantes que tienen un resultado de más de 90.
+db.restaurants.find({ 'grades.score': {$gt:90}})
+// Escribe una consulta para encontrar los restaurantes que tienen un resultado de más de 80 pero menos que 100.
+
+
+
+
+
+
 // Escribe una consulta para encontrar a los restaurantes que se localizan en valor de latitud menos de -95.754168.
 // Escribe una consulta de MongoDB para encontrar los restaurantes que no preparan ninguna cuisine de 'American' y su calificación es superior a 70 y longitud inferior a -65.754168.
 // Escribe una consulta para encontrar a los restaurantes que no preparan ninguna cuisine de 'American' y consiguieron un marcador más de 70 y localizado en la longitud menos que -65.754168. Nota : Realiza esta consulta sin utilizar $and operador.
