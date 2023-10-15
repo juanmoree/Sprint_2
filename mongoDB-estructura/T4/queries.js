@@ -27,13 +27,12 @@ db.restaurants.find({cuisine: {$ne: 'American'}, 'grades.grade': 'A', borough: {
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que contienen 'Wil' como las tres primeras letras en su nombre.
 db.restaurants.find({name: {$regex: /^Wil/}}, {restaurant_id:1, name:1, borough:1, cuisine:1})
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que contienen 'ces' como las últimas tres letras en su nombre.
-db.restaurants.find({name: {$regex: /ces^/}}, {restaurant_id:1, name:1, borough:1, cuisine:1})
-
-
-
-
-
+db.restaurants.find({name: {$regex: /ces$/}}, {restaurant_id:1, name:1, borough:1, cuisine:1})
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que contienen 'Reg' como tres letras en algún sitio en su nombre.
+db.restaurants.find({name: {$regex: /Reg/}}, {restaurant_id:1, name:1, borough:1, cuisine:1})
+
+
+
 // Escribe una consulta para encontrar los restaurantes que pertenecen al Bronx y prepararon cualquier plato americano o chino.
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que pertenecen a Staten Island o Queens o Bronx o Brooklyn.
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que no pertenecen a Staten Island o Queens o Bronx o Brooklyn.
