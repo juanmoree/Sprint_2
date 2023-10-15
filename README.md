@@ -9,3 +9,4 @@ Esto hace que sea imprescindible conocer las nociones básicas sobre el diseño 
 Fuentes:
 https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#mongodb-method-db.collection.find
 https://www.mongodb.com/docs/manual/reference/command/find/#mongodb-dbcommand-dbcmd.find
+https://www.mongodb.com/docs/manual/reference/operator/query/#std-label-query-selectors

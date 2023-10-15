@@ -13,29 +13,32 @@ db.restaurants.find({}, {borough: "bronx", _id: 0, name: 1}, {limit: 5})
 // Escribe una consulta para mostrar los próximos 5 restaurantes después de saltar los primeros 5 del Bronx.
 db.restaurants.find({}, {borough: "bronx", _id: 0, name: 1}).skip(5).limit(5)
 // Escribe una consulta para encontrar los restaurantes que tienen un resultado de más de 90.
-db.restaurants.find({ 'grades.score': {$gt:90}})
+db.restaurants.find({ "grades.score": {$gt:90}})
 // Escribe una consulta para encontrar los restaurantes que tienen un resultado de más de 80 pero menos que 100.
 db.restaurants.find({grades: {$elemMatch: {score: {$gt: 80, $lt: 100}}}})
 // Escribe una consulta para encontrar a los restaurantes que se localizan en valor de latitud menos de -95.754168.
-db.restaurants.find({'address.coord.0': {$lt: -95.754168}})
+db.restaurants.find({"address.coord.0": {$lt: -95.754168}})
 // Escribe una consulta de MongoDB para encontrar los restaurantes que no preparan ninguna cuisine de 'American' y su calificación es superior a 70 y longitud inferior a -65.754168.
-db.restaurants.find({$and: [{cuisine: {$ne: 'American'}}, {'grades.score': {$gt: 70}}, {'address.coord.1': {$lt: -65.754168}}]})
+db.restaurants.find({$and: [{cuisine: {$ne: "American"}}, {"grades.score": {$gt: 70}}, {'address.coord.1': {$lt: -65.754168}}]})
 // Escribe una consulta para encontrar a los restaurantes que no preparan ninguna cuisine de 'American' y consiguieron un marcador más de 70 y localizado en la longitud menos que -65.754168. Nota : Realiza esta consulta sin utilizar $and operador.
-db.restaurants.find({cuisine: {$ne: 'American'}, 'grades.score': {$gt: 70}, 'address.coord.1': {$lt: -65.754168}})
+db.restaurants.find({cuisine: {$ne: "American"}, "grades.score": {$gt: 70}, "address.coord.1": {$lt: -65.754168}})
 // Escribe una consulta para encontrar a los restaurantes que no preparan ninguna cuisine de 'American' y obtuvieron un punto de grado 'A' no pertenece a Brooklyn. Se debe mostrar el documento según la cuisine en orden descendente.
-db.restaurants.find({cuisine: {$ne: 'American'}, 'grades.grade': 'A', borough: {$ne: 'Brooklyn'}}).sort({cuisine: -1})
+db.restaurants.find({cuisine: {$ne: "American"}, "grades.grade": "A", borough: {$ne: "Brooklyn"}}).sort({cuisine: -1})
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que contienen 'Wil' como las tres primeras letras en su nombre.
 db.restaurants.find({name: {$regex: /^Wil/}}, {restaurant_id:1, name:1, borough:1, cuisine:1})
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que contienen 'ces' como las últimas tres letras en su nombre.
 db.restaurants.find({name: {$regex: /ces$/}}, {restaurant_id:1, name:1, borough:1, cuisine:1})
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que contienen 'Reg' como tres letras en algún sitio en su nombre.
 db.restaurants.find({name: {$regex: /Reg/}}, {restaurant_id:1, name:1, borough:1, cuisine:1})
-
-
-
-// Escribe una consulta para encontrar los restaurantes que pertenecen al Bronx y prepararon cualquier plato americano o chino.
+// Escribe una consulta para encontrar los restaurantes que pertenecen al Bronx y preparan cualquier plato americano o chino.
+db.restaurants.find({$and : [{borough : "Bronx"}, {$or : [{cuisine : "American "},{cuisine : "Chinese"}]}]}) // Not working with \''\?
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que pertenecen a Staten Island o Queens o Bronx o Brooklyn.
+db.restaurants.find({borough: {$in: ["Staten Island", "Queens", "Bronx", "Brooklyn"]}},{restaurant_id:1, name:1, borough:1, cuisine:1})
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que no pertenecen a Staten Island o Queens o Bronx o Brooklyn.
+db.restaurants.find({borough: {$nin: ["Staten Island", "Queens", "Bronx", "Brooklyn"]}},{restaurant_id:1, name:1, borough:1, cuisine:1})
+
+
+
 // Escribe una consulta para encontrar restaurante_id, name, borough y cuisine para aquellos restaurantes que consigan un marcador que no es más de 10.
 // Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que preparan pescado excepto 'American' y 'Chinees' o el name del restaurante comienza con letras 'Wil'.
 // Escribe una consulta para encontrar el restaurant_id, name, y gradas para aquellos restaurantes que consigan un grado "A" y un score 11 en datos de estudio ISODate "2014-08-11T00:00:00Z".
