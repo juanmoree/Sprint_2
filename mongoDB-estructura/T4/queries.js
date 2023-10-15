@@ -15,7 +15,7 @@ db.restaurants.find({}, {borough: "bronx", _id: 0, name: 1}).skip(5).limit(5)
 // Escribe una consulta para encontrar los restaurantes que tienen un resultado de más de 90.
 db.restaurants.find({ 'grades.score': {$gt:90}})
 // Escribe una consulta para encontrar los restaurantes que tienen un resultado de más de 80 pero menos que 100.
-
+db.restaurants.aggregate({$match: {'grades': {score:{$gt:90, $lt:100}}}})
 
 
 
