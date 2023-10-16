@@ -38,19 +38,27 @@ db.restaurants.find({borough: {$in: ["Staten Island", "Queens", "Bronx", "Brookl
 db.restaurants.find({borough: {$nin: ["Staten Island", "Queens", "Bronx", "Brooklyn"]}},{restaurant_id:1, name:1, borough:1, cuisine:1})
 // Escribe una consulta para encontrar restaurante_id, name, borough y cuisine para aquellos restaurantes que consigan un marcador que no es más de 10.
 db.restaurants.find({"grades.score": {$lt: 10}}, {restaurant_id:1, name:1, borough:1, cuisine:1, "grades.score":1})
-// Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que preparan pescado excepto 'American' y 'Chinees' o el name del restaurante comienza con letras 'Wil'.
-
-
-
-
-// Escribe una consulta para encontrar el restaurant_id, name, y gradas para aquellos restaurantes que consigan un grado "A" y un score 11 en datos de estudio ISODate "2014-08-11T00:00:00Z".
-// Escribe una consulta para encontrar el restaurante_id, name y gradas para aquellos restaurantes donde el 2º elemento de variedad de grados contiene un grado de "A" y marcador 9 sobre un ISODate "2014-08-11T00:00:00Z".
+// Escribe una consulta para encontrar el restaurante_id, name, borough y cuisine para aquellos restaurantes que preparan pescado excepto 'American' y 'Chinese' o el nombre del restaurante comienza con letras 'Wil'.
+db.restaurants.find({$nor : [{cuisine: {$ne :"Seafood"}}, {cuisine: {$in : ["American", "Chinese"]}}, {name: /^Wil/}]}, {restaurant_id:1, name:1, borough:1, cuisine:1})
+// Escribe una consulta para encontrar el restaurant_id, name, y grades para aquellos restaurantes que consigan un grado "A" y un score 11 en datos de estudio ISODate "2014-08-11T00:00:00Z".
+db.restaurants.find({ "grades": {$elemMatch: { "date": ISODate("2014-08-11T00:00:00Z"),  "grade": "A",  "score": 11  } }}, {restaurant_id : 1, name : 1, grades :1})
+// Escribe una consulta para encontrar el restaurante_id, name y grades para aquellos restaurantes donde el 2º elemento de variedad de grados contiene un grado de "A" y marcador 9 sobre un ISODate "2014-08-11T00:00:00Z".
+db.restaurants.find({ "grades.1" : {date : ISODate('2014-08-11T00:00:00Z'), grade :'A', score : 9 }}, {restaurant_id : 1, name : 1, grades :1})
 // Escribe una consulta para encontrar el restaurante_id, name, dirección y ubicación geográfica para aquellos restaurantes en los que el segundo elemento del array coord contiene un valor que es más de 42 y hasta 52.
+db.restaurants.find({"address.coord.1" : {$gt : 42, $lte : 52}}, {restaurant_id : 1, name : 1, "address.street" : 1, "address.building" : 1, "address.coord" : 1})
 // Escribe una consulta para organizar el nombre de los restaurantes en orden ascendente junto a todas las columnas.
+db.restaurants.find().sort({name: 1})
 // Escribe una consulta para organizar el nombre de los restaurantes en orden descendente junto a todas las columnas.
+db.restaurants.find().sort({name: -1})
 // Escribe una consulta para organizar el nombre de la cuisine en orden ascendente y por el mismo barrio de cuisine. Orden descendente.
+db.restaurants.fin().sort({cuisine: 1, borough: -1})
 // Escribe una consulta para saber todas las direcciones que no contienen la calle.
+db.restaurants.find({"address.street": null})
 // Escribe una consulta que seleccionará todos los documentos en la colección de restaurantes cuyo valor del campo coord es Double.
+db.restaurants.find({"address.coord" : {$type : "double"}})
 // Escribe una consulta que seleccionará el restaurante_id, name y grade para aquellos restaurantes que devuelvan 0 como resto después de dividir el marcador por 7.
-// Escribe una consulta para encontrar el name de restaurante, borough, longitud y altitud y cuisine para aquellos restaurantes que contienen 'mon' como tres letras en algún sitio de su nombre.
+db.restaurants.find({"grades.score": {$mod : [7, 0]}}, {restaurant_id:1, name:1, grade:1})
+// Escribe una consulta para encontrar el name de restaurante, borough, longitud y latitud y cuisine para aquellos restaurantes que contienen 'mon' como tres letras en algún sitio de su nombre.
+db.restaurants.find({"name": {$regex : /mon/}}, {name:1, borough:1, "address.coord":1, cuisine:1})
 // Escribe una consulta para encontrar el name de restaurante, borough, longitud y latitud y cuisine para aquellos restaurantes que contienen 'Mad' como primeras tres letras de su nombre.
+db.restaurants.find({"name": {$regex : /^Mad/}}, {name:1, borough:1, "address.coord":1, cuisine:1})
